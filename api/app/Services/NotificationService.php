@@ -66,15 +66,15 @@ class NotificationService
             case "PENDING":
                 return "En attente";
             case "ACTIVE":
-                return "Actif";
+                return "Acceptée";
             case "INACTIVE":
                 return "Inactif";
             case "DELETED":
                 return "Supprimé";
             case "REJECTED":
-                return "Rejeté";
+                return "Rejetée";
             case "BLOCKED":
-                return "Bloqué";
+                return "Bloquée";
             default:
                 return "";
         }
@@ -127,7 +127,7 @@ class NotificationService
         try {
             // $demande->refresh();
             // $notifiRequestName = $demande->mission ?? $demande->object ?? $demande->motif ?? '';
-            $title = 'Votre ' . NotificationService::getUserRequestType($demande->request_type) . ' a été modifiée, votre demande est en ' . NotificationService::getStausName($demande->status);
+            $title = 'Votre ' . NotificationService::getUserRequestType($demande->request_type) . ' a été modifiée, votre demande est ' . NotificationService::getStausName($demande->status);
             if ($demande->status == 'REJECTED') {
                 $title = 'Votre ' . NotificationService::getUserRequestType($demande->request_type) . ' a été rejeté, en raison de : ' . $demande->reject_reason;
             }
