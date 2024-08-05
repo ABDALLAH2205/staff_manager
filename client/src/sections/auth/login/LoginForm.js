@@ -25,6 +25,8 @@ import { useRouter } from 'next/router';
 export default function LoginForm() {
   const dispatch = useDispatch();
   const router = useRouter();
+  // const history = useHIs();
+
   const { user, error, success, isLoading } = useSelector((state) => state.user);
 
   const { enqueueSnackbar } = useSnackbar();
@@ -66,10 +68,16 @@ export default function LoginForm() {
   useEffect(() => {
     if (!isLoading && success && !error) {
       enqueueSnackbar('Connexion reussie');
-      if(user.isAdmin) {
-        router.replace(PATH_DASHBOARD.general.userRequest);
+      // if (user.isAdmin) {
+      //   router.replace(PATH_DASHBOARD.general.userRequest) + '?first-logged=1';
+      // } else {
+      //   router.replace(PATH_DASHBOARD.general.booking) + '?first-logged=1';
+      // }
+
+      if (user.isAdmin) {
+        router.replace(`${PATH_DASHBOARD.general.userRequest}?new-logged=1`);
       } else {
-        router.replace(PATH_DASHBOARD.general.booking);
+        router.replace(`${PATH_DASHBOARD.general.booking}?new-logged=1`);
       }
     }
 

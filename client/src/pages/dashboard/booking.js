@@ -32,7 +32,7 @@ import {
   SentIcon,
   SeoIllustration,
 } from '../../assets';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import RequestFormBase from './create-request-form/RequestFormBase';
 import {
   ABSENCE_REQUEST_KEY,
@@ -47,6 +47,8 @@ import {
   VEHICLE_EXIT_REQUEST,
 } from './create-request-form/ids.constant';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import { PATH_DASHBOARD } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -57,6 +59,8 @@ GeneralBooking.getLayout = function getLayout(page) {
 // ----------------------------------------------------------------------
 
 export default function GeneralBooking() {
+  const router = useRouter();
+
   const { themeStretch } = useSettings();
   const md = 6;
 
@@ -137,6 +141,17 @@ export default function GeneralBooking() {
       icon: <DocIllustration />,
     },
   ];
+
+  useEffect(() => {
+    if (router.query['new-logged'] === '1') {
+      // router.replace(PATH_DASHBOARD.general.booking);
+
+      // router.replace(window.location.pathname);
+      window.location.replace(window.location.pathname);
+
+      // router.reload();
+    }
+  }, [router]);
 
   return (
     <Page title="General: Banking">

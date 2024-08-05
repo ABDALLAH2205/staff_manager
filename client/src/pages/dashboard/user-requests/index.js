@@ -112,6 +112,7 @@ export default function UserRequestList() {
   const { themeStretch } = useSettings();
 
   const { push } = useRouter();
+  const router = useRouter();
 
   const [tableData, setTableData] = useState(_userList);
 
@@ -227,7 +228,7 @@ export default function UserRequestList() {
     );
     if (userRequest && userRequest.actionType === ACTION_DELETE && userRequest.success) {
       // if (!isExpired(userRequest?.actionTimeExpire)) {
-      enqueueSnackbar('Demande supprimée avec suucès');
+      enqueueSnackbar('Demande supprimée avec succès');
       const payload = user && !user?.isAdmin && user?.id ? `?user_id=${user?.id}` : '';
       dispatch(getUserRequests(payload));
       // }
@@ -257,6 +258,17 @@ export default function UserRequestList() {
       </>
     );
   }
+
+  useEffect(() => {
+    if (router.query['new-logged'] === '1') {
+      // router.replace(PATH_DASHBOARD.general.booking);
+
+      // router.replace(window.location.pathname);
+      window.location.replace(window.location.pathname);
+
+      // router.reload();
+    }
+  }, [router]);
 
   return (
     <Page title="User: List">

@@ -17,10 +17,12 @@ import Logo from '../../../components/Logo';
 import Scrollbar from '../../../components/Scrollbar';
 import { NavSectionVertical } from '../../../components/nav-section';
 //
-import navConfig from './NavConfig';
 import NavbarDocs from './NavbarDocs';
 import NavbarAccount from './NavbarAccount';
 import CollapseButton from './CollapseButton';
+import { useSelector } from 'react-redux';
+import { NAV_CONFIG } from './NavConfig';
+import NAV_ADMIN_CONFIG from './NavConfigAdmin';
 
 // ----------------------------------------------------------------------
 
@@ -44,6 +46,7 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }) {
   const theme = useTheme();
 
   const { pathname } = useRouter();
+  const { user } = useSelector((state) => state.user);
 
   const isDesktop = useResponsive('up', 'lg');
 
@@ -56,6 +59,15 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+
+  const navConfig = () => {
+    let nav = NAV_CONFIG;
+
+    if (user?.isAdmin) {
+      nav = NAV_ADMIN_CONFIG;
+    }
+    return nav;
+  };
 
   const renderContent = (
     <Scrollbar
@@ -85,7 +97,7 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }) {
         {/* <NavbarAccount isCollapse={isCollapse} /> */}
       </Stack>
 
-      <NavSectionVertical navConfig={navConfig} isCollapse={isCollapse} />
+      <NavSectionVertical navConfig={navConfig()} isCollapse={isCollapse} />
 
       <Box sx={{ flexGrow: 1 }} />
 

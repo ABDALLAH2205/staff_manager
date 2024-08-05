@@ -39,7 +39,7 @@ let isAdmin = false;
 
 let nav = [];
 
-const navConfig = [
+export const NAV_CONFIG = [
   // GENERAL
   // ----------------------------------------------------------------------
   {
@@ -154,7 +154,7 @@ const navConfig = [
   // },
 ];
 
-const navAdminConfig = [
+export const NAV_ADMIN_CONFIG = [
   // GENERAL
   // ----------------------------------------------------------------------
   {
@@ -192,6 +192,6 @@ const navAdminConfig = [
   },
 ];
 
-nav = isAdmin ? navAdminConfig : navConfig;
+nav = isAdmin ? NAV_ADMIN_CONFIG : NAV_CONFIG;
 
 export default nav;

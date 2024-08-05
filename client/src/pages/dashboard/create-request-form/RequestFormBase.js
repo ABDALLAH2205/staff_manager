@@ -10,6 +10,7 @@ import {
   DialogContentText,
   Grid,
   Alert,
+  CircularProgress,
 } from '@mui/material';
 import AbsenceRequests from './AbsenceRequests';
 import PropTypes from 'prop-types';
@@ -270,7 +271,7 @@ function RequestFormBase({ open, handleClose, requestData }) {
         handleClose();
       }
     }
-  }, [userRequest, enqueueSnackbar, dispatch, handleClose]);
+  }, [userRequest, enqueueSnackbar, dispatch, handleClose, isSubmitted, reset, requestData, user]);
 
   // ! on error in request
   useEffect(() => {
@@ -279,7 +280,7 @@ function RequestFormBase({ open, handleClose, requestData }) {
         enqueueSnackbar(userRequest.error, { variant: 'error' });
       }
     }
-  }, [userRequest, enqueueSnackbar]);
+  }, [userRequest, enqueueSnackbar, isSubmitted]);
 
   return (
     <FormProvider {...methods}>
@@ -421,24 +422,32 @@ function RequestFormBase({ open, handleClose, requestData }) {
           </DialogContent>
 
           <DialogActions>
-            <Button
-              onClick={() => {
-                handleClose();
-                reset();
-              }}
-              color="inherit"
-            >
-              Annuler
-            </Button>
+            {userRequest.isLoading  ? (
+              <CircularProgress />
+            ) : (
+              <>
+                <Button
+                  onClick={() => {
+                    handleClose();
+                    reset();
+                  }}
+                  color="inherit"
+                >
+                  Annuler
+                </Button>
 
-            <Button
-              type="submit"
-              onClick={handleSubmit(onSubmit)}
-              disabled={isSubmitting || !isValid}
-              variant="contained"
-            >
-              {requestData && requestData.data && requestData.data.id ? 'Modifier la demande' : 'Envoyer la demande'}
-            </Button>
+                <Button
+                  type="submit"
+                  onClick={handleSubmit(onSubmit)}
+                  disabled={isSubmitting || !isValid}
+                  variant="contained"
+                >
+                  {requestData && requestData.data && requestData.data.id
+                    ? 'Modifier la demande'
+                    : 'Envoyer la demande'}
+                </Button>
+              </>
+            )}
           </DialogActions>
         </Dialog>
       </form>

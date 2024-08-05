@@ -70,7 +70,7 @@ class NotificationService
             case "INACTIVE":
                 return "Inactif";
             case "DELETED":
-                return "Supprimé";
+                return "Supprimée";
             case "REJECTED":
                 return "Rejetée";
             case "BLOCKED":

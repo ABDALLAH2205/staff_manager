@@ -23,6 +23,7 @@ const initialState = {
   registerSuccess: false,
   updateSuccess: false,
   token: null,
+  newLogin: null,
   user: {},
   expire: null,
   notifications: undefined,
