@@ -1,4 +1,5 @@
 import {
+  ABSENCE_REQUEST_KEY,
   CONGESS_REQUEST_KEY,
   MATERIALS_REQUEST,
   MISSION_REQUEST_KEY,
@@ -75,6 +76,9 @@ export function getUserRequestName(key) {
     case MISSION_REQUEST_KEY:
       return "Demande d'autorisations de missions";
 
+    case ABSENCE_REQUEST_KEY:
+      return "Demande d'absences";
+
     case CONGESS_REQUEST_KEY:
       return 'Demande de départ en congés';
 
@@ -82,7 +86,7 @@ export function getUserRequestName(key) {
       return "Demande d'expression de besoins";
 
     case REQUEST_FOR_TELEPHONE_CREDIT_EXTENSION:
-      return 'Demande de rallonge de créditéléphonique';
+      return 'Demande de rallonge de crédit téléphonique';
 
     case REQUEST_FOR_CREDIT_ON_XEROX_MULTIFUNCTION_UNITS:
       return "Demande de financement d'unite de fonctionnement Xerox";

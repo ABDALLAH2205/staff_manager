@@ -418,10 +418,34 @@ export function register(payload) {
  */
 export function updateAccount(payload) {
   return async () => {
-    dispatch(slice.actions.startLoading());
+    dispatch(slice.actions.startUsersLoading({ actionType: ACTION_USERS_UPDATE }));
+
+    const formData = new FormData();
+
+    for (const key in payload) {
+      formData.append(key, payload[key]);
+    }
+    console.log(payload);
+
+    if (payload.photoURL) {
+      formData.append('avatar', payload.photoURL);
+      formData.delete('photoURL');
+    }
+
+    // Ensure the 'id' field is included in the payload
+    if (!formData.has('id')) {
+      formData.append('id', payload.id);
+    }
+    formData.append('_method', 'PUT')
+
     try {
-      const response = await axios.put('/user/update-profile', payload);
-      dispatch(slice.actions.updateAccountSuccess(response.data));
+      const response = await axios.put('/user/update-profile', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Set content type to multipart/form-data
+        },
+      });
+
+      dispatch(slice.actions.updateSingleUserSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
@@ -569,8 +593,25 @@ export function fetchAllUsers(payload) {
 export function updateUser(payload) {
   return async () => {
     dispatch(slice.actions.startUsersLoading({ actionType: ACTION_USERS_UPDATE }));
+
+    const formData = new FormData();
+
+    for (const key in payload) {
+      formData.append(key, payload[key]);
+    }
+    console.log(payload);
+
+    if (payload.avatar) {
+      formData.append('avatar', payload.avatar);
+    }
+
     try {
-      const response = await axios.put('/user/update-profile', payload);
+      const response = await axios.put('/user/update-profile', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Set content type to multipart/form-data
+        },
+      });
+
       dispatch(slice.actions.updateSingleUserSuccess(response.data));
     } catch (error) {
       dispatch(slice.actions.hasErrorUsers(error));
